@@ -33,15 +33,18 @@ Two CSV files are used:
 6. Report: outputs, analysis of cleaned data in Power BI
 
 ### Repo Structure
+'''
 library-data-quality/
 ├── data/               # Source CSV files 
 ├── src/                # Python scripts (ingest, clean, transform) 
 ├── tests/              # Unit tests 
 ├── output/             # Cleaned data ready for Power BI 
 └── pipeline/           # Azure DevOps pipeline
-
+'''
 
 ### How to Run
+'''
 pip install -r requirements.txt 
 python src/clean.py 
 pytest tests/
+'''
