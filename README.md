@@ -32,19 +32,23 @@ Two CSV files are used:
 5. Automate: CI/CD pipeline to run the process end-to-end
 6. Report: outputs, analysis of cleaned data in Power BI
 
-### Repo Structure
-'''
-library-data-quality/
-├── data/               # Source CSV files 
-├── src/                # Python scripts (ingest, clean, transform) 
-├── tests/              # Unit tests 
-├── output/             # Cleaned data ready for Power BI 
-└── pipeline/           # Azure DevOps pipeline
-'''
+## Repository Structure
 
-### How to Run
-'''
-pip install -r requirements.txt 
-python src/clean.py 
+```
+library-data-quality/
+├── data/               # Source CSV files
+├── src/                # Python scripts (ingest, clean, transform)
+├── tests/              # Unit tests
+├── output/             # Cleaned data ready for Power BI
+└── pipeline/           # Azure DevOps pipeline YAML
+```
+
+
+## How to Run
+
+```bash
+pip install -r requirements.txt
+python src/clean.py
 pytest tests/
-'''
+```
+
