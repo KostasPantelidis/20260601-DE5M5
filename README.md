@@ -34,14 +34,14 @@ Two CSV files are used:
 
 ### Repo Structure
 library-data-quality/
-├── data/               # Source CSV files
-├── src/                # Python scripts (ingest, clean, transform)
-├── tests/              # Unit tests
-├── output/             # Cleaned data ready for Power BI
+├── data/               # Source CSV files 
+├── src/                # Python scripts (ingest, clean, transform) 
+├── tests/              # Unit tests 
+├── output/             # Cleaned data ready for Power BI 
 └── pipeline/           # Azure DevOps pipeline
 
 
 ### How to Run
-pip install -r requirements.txt
-python src/clean.py
+pip install -r requirements.txt 
+python src/clean.py 
 pytest tests/
