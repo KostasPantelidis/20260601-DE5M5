@@ -1,19 +1,19 @@
 # 20260601-DE5M5
 
-### Scenario:
+### Scenario
 A library wants to automate their manual data quality process using Python and Azure DevOps. This project ingests, cleans and transforms borrowing records, ready for presentation in Power BI.
 
-### User Stories or Backlog:
+### User Stories or Backlog
 
 
 
 
-### Datasets:
+### Datasets
 Two CSV files are used:
 - customer.csv   : library member records (ID, Name)
 - borrowings.csv : book checkout and return
 
-### Solutions Diagram:
+### Solutions Diagram
 
 
 
