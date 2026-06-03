@@ -1,6 +1,6 @@
 import unittest
 import random
-from calc import Calculator
+from tests_demo.calc import Calculator
 
 class TestOperations(unittest.TestCase):
 
