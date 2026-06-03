@@ -1,5 +1,4 @@
 import unittest
-import random
 from calc import Calculator
 
 class TestOperations(unittest.TestCase):
