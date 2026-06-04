@@ -78,55 +78,37 @@ def writeToSQL(df, table_name, server, database):
 if __name__ == '__main__':
     print('**************** Starting Clean ****************')
 
-    # Instantiation
-    #dropCount= 0
-    #customer_drop_count = 0
-    filepath_input = 'data/03_Library Systembook.csv'
+    # Create an explicit output directory path
+    import os
+    output_dir = "/app/output"
+    os.makedirs(output_dir, exist_ok=True) # Ensure the directory exists
+
+    # --- Cleaning File 1 (Books) ---
+    filepath_input = "03_Library Systembook.csv"
     date_columns = ['Book checkout', 'Book Returned']
-    date_errors = None
 
     data = fileLoader(filepath=filepath_input)
-
-    # Drop duplicates & NAs
     data = duplicateCleaner(data)
     data = naCleaner(data)
 
-    # Converting date columns into datetime
     for col in date_columns:
         data = dateCleaner(col, data)
     
-    # Enriching the dataset
     data = enrich_dateDuration(df=data, colA='Book Returned', colB='Book checkout')
 
-    #data.to_csv('cleaned_file.csv')
-    print(data)
+    # SAVE FILE 1 TO THE OUTPUT DIRECTORY
+    data.to_csv(os.path.join(output_dir, 'cleaned_books.csv'), index=False)
+    print("Saved: cleaned_books.csv")
 
-    #Cleaning the customer file
-    filepath_input_2 = 'data/03_Library SystemCustomers.csv'
+    # --- Cleaning File 2 (Customers) ---
+    filepath_input_2 = "03_Library SystemCustomers.csv"
 
     data2 = fileLoader(filepath=filepath_input_2)
-
-    # Drop duplicates & NAs
     data2 = duplicateCleaner(data2)
     data2 = naCleaner(data2)
 
-    print(data2)
-    print('**************** DATA CLEANED ****************')
-
-"""
-    print('Writing to SQL Server...')
-
-    writeToSQL(
-        data, 
-        table_name='loans_bronze', 
-        server = 'localhost', 
-        database = 'DE5_Module5' 
-    )
-
-    writeToSQL(
-        data2, 
-        table_name='customer_bronze', 
-        server = 'localhost', 
-        database = 'DE5_Module5'
-    )
-    print('**************** End ****************') """
+    # SAVE FILE 2 TO THE OUTPUT DIRECTORY
+    data2.to_csv(os.path.join(output_dir, 'cleaned_customers.csv'), index=False)
+    print("Saved: cleaned_customers.csv")
+    
+    print('**************** DATA CLEANED & SAVED ****************')
