@@ -159,7 +159,6 @@ https://github.com/YOUR-USERNAME/YOUR-REPO-NAME/actions/workflows/ci.yml/badge.s
 
 ![Power BI Dashboard](images/image2.png)
 
-> *Replace the placeholder above with your screenshot once the report is built.*
 
 ---
 
