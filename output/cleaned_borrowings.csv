@@ -1,0 +1,19 @@
+id,books,book checkout,book returned,days allowed to borrow,customer id,customer name
+1.0,Catcher in the Rye ,,2023-02-25,2 weeks,1.0,Jane Doe
+2.0,Lord of the rings the two towers,,2023-03-21,2 weeks,2.0,John Smith
+3.0,Lord of the rings the return of the kind,,2023-03-25,2 weeks,3.0,Dan Reeves
+5.0,Dune ,,2023-03-25,2 weeks,5.0,William Holden
+6.0,Little Women,,2023-05-01,2 weeks,1.0,Jane Doe
+7.0,IT,,2023-04-03,2 weeks,6.0,Jaztyn Forest
+8.0,Misery ,,2023-04-03,2 weeks,7.0,Jackie Irving
+9.0,Catch 22,,2023-04-16,2 weeks,7.0,Jackie Irving
+10.0,Animal Farm ,,2023-04-24,2 weeks,2.0,John Smith
+11.0,1984,,2023-04-27,2 weeks,8.0,Matthew Stirling
+12.0,Little Women,,2023-05-01,2 weeks,1.0,Jane Doe
+13.0,East of Eden,,2023-05-05,2 weeks,2.0,John Smith
+14.0,America Is in the Heart,,2023-05-07,2 weeks,3.0,Dan Reeves
+15.0,Wuthering Heights,,2023-05-10,2 weeks,9.0,Emory Ted
+16.0,Dark Tales,,2023-06-01,2 weeks,2.0,John Smith
+17.0,The Bloody Chamber,,2023-06-04,2 weeks,3.0,Dan Reeves
+18.0,Les Miserables,,2023-06-07,2 weeks,5.0,William Holden
+20.0,Frankenstein,,2023-06-20,2 weeks,2.0,John Smith
