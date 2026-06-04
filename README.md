@@ -1,7 +1,5 @@
 # Library Data Quality Automation (Project 20260601-DE5M5)
 
-![CI](https://github.com/YOUR-USERNAME/YOUR-REPO-NAME/actions/workflows/ci.yml/badge.svg)
-
 ## 📖 Scenario
 A library wants to automate its manual data quality process using Python and Azure DevOps. This project ingests, cleans, and transforms library borrowing records, making them ready for seamless presentation and analysis in Power BI.
 
@@ -145,12 +143,6 @@ Push to main / Pull Request
 │  ✅ Pass → green badge  │
 │  ❌ Fail → blocks merge │
 └─────────────────────────┘
-```
-
-### Activating the badge
-Once you've pushed `.github/workflows/ci.yml` to your repo and the workflow has run once, replace the badge URL at the top of this file:
-```
-https://github.com/YOUR-USERNAME/YOUR-REPO-NAME/actions/workflows/ci.yml/badge.svg
 ```
 
 ---
