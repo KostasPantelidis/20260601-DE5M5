@@ -1,2 +1,3 @@
 Execution_Timestamp,Number_of_records_processed,Number_of_records_dropped,Unique_Books_Count,Unique_Customers_Count,Pipeline_Execution_Time_Sec
 2026-06-04 10:53:34,123,96,17,8,0.0153
+git 
