@@ -1,5 +1,7 @@
 # Library Data Quality Automation (Project 20260601-DE5M5)
 
+![CI](https://github.com/YOUR-USERNAME/YOUR-REPO-NAME/actions/workflows/ci.yml/badge.svg)
+
 ## 📖 Scenario
 A library wants to automate its manual data quality process using Python and Azure DevOps. This project ingests, cleans, and transforms library borrowing records, making them ready for seamless presentation and analysis in Power BI.
 
@@ -107,6 +109,49 @@ All three tests should pass:
 | `Unreturned_Books_Count` | Transactions with no return date (potentially overdue) |
 | `Referential_Integrity_Drops` | Transactions dropped because the Customer ID had no match |
 | `Pipeline_Execution_Time_Sec` | Total pipeline runtime in seconds |
+
+---
+
+## 🔄 CI/CD Pipeline
+
+This project uses **GitHub Actions** for continuous integration. Every push to `main` and every pull request automatically triggers the pipeline, which installs dependencies and runs the full `pytest` test suite. A green badge at the top of this file confirms the cleaning logic is valid.
+
+### Workflow file
+The pipeline is defined in `.github/workflows/ci.yml` and runs on `ubuntu-latest`.
+
+```
+Push to main / Pull Request
+        │
+        ▼
+┌─────────────────────────┐
+│  Checkout repository    │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│  Set up Python 3.11     │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│  pip install -r         │
+│  requirements.txt       │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│  pytest tests/ -v       │
+│                         │
+│  ✅ Pass → green badge  │
+│  ❌ Fail → blocks merge │
+└─────────────────────────┘
+```
+
+### Activating the badge
+Once you've pushed `.github/workflows/ci.yml` to your repo and the workflow has run once, replace the badge URL at the top of this file:
+```
+https://github.com/YOUR-USERNAME/YOUR-REPO-NAME/actions/workflows/ci.yml/badge.svg
+```
 
 ---
 

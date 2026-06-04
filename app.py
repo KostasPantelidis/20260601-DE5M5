@@ -4,7 +4,7 @@ from datetime import datetime
 import pandas as pd
 
 def run_pipeline():
-    print("🚀 Starting Library Data Quality Pipeline...")
+    print("Starting Library Data Quality Pipeline...")
     start_time = time.time()
 
     # Define paths
@@ -19,13 +19,13 @@ def run_pipeline():
     os.makedirs(output_dir, exist_ok=True)
 
     if not os.path.exists(customer_path) or not os.path.exists(borrowings_path):
-        print("❌ Error: Source CSV files missing from 'data/' directory.")
+        print("Error: Source CSV files missing from 'data/' directory.")
         return
 
     # ==========================================
     # 1. INGESTION & HEADER NORMALIZATION
     # ==========================================
-    print("📥 Ingesting source datasets...")
+    print("Ingesting source datasets...")
     df_customers  = pd.read_csv(customer_path)
     df_borrowings = pd.read_csv(borrowings_path)
 
@@ -37,7 +37,7 @@ def run_pipeline():
     # ==========================================
     # 2. CLEANING & TRANSFORMATION
     # ==========================================
-    print("🧹 Cleaning data issues...")
+    print("Cleaning data issues...")
 
     # --- Clean Customers ---
     if 'customer id' in df_customers.columns:
@@ -71,7 +71,7 @@ def run_pipeline():
     # ==========================================
     # 3. METRICS GATHERING
     # ==========================================
-    print("📊 Calculating execution metrics...")
+    print("Calculating execution metrics...")
 
     total_cleaned_records   = len(df_customers_clean) + len(df_borrowings_clean)
     records_dropped         = total_raw_records - total_cleaned_records
@@ -100,7 +100,7 @@ def run_pipeline():
 
     df_results = pd.DataFrame(metrics_summary)
     df_results.to_csv(results_path, index=False)
-    print(f"💾 Summary metrics exported to:    {results_path}")
+    print(f"Summary metrics exported to:    {results_path}")
 
     # ==========================================
     # 5. EXPORT: cleaned_borrowings.csv  (detail layer for Power BI slicing)
@@ -115,8 +115,8 @@ def run_pipeline():
         )
 
     df_borrowings_clean.to_csv(cleaned_borrowings_path, index=False)
-    print(f"💾 Cleaned borrowings exported to: {cleaned_borrowings_path}")
-    print(f"⏱️  Total Execution Time: {execution_time_seconds} seconds\n")
+    print(f"Cleaned borrowings exported to: {cleaned_borrowings_path}")
+    print(f"Total Execution Time: {execution_time_seconds} seconds\n")
 
 
 if __name__ == "__main__":
