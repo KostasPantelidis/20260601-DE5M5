@@ -27,17 +27,7 @@ The project processes two core source CSV files located in the `data/` directory
 
 ## 🛠️ Solutions Diagram & Process Flow
 
-[ data/ ]                [ src/ ]                [ output/ ]             [ Power BI ]
-+--------------+       +-----------------+       +--------------+       +------------------+
-| customer.csv | ----> |                 |       |              |       |  • Total Records |
-|              |       |  cleanerapp.py  | ----> |  result.csv  | ----> |  • Records Dropped|
-| borrowings.csv| ----> |                 |       |              |       |  • Exec Time     |
-+--------------+       +-----------------+       +--------------+       +------------------+
-▲
-| (Validated by)
-+--------------+
-|    pytest    |
-+--------------+
+![Solutions Diagram & Process Flow](images/image1.png)
 
 
 ### Planned Approach:
