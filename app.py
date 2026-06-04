@@ -11,8 +11,11 @@ def run_pipeline():
     data_dir = "data"
     output_dir = "output"
     
-    customer_path = os.path.join(data_dir, "customer.csv")
-    borrowings_path = os.path.join(data_dir, "borrowings.csv")
+    # CORRECTED FILE MAPPING:
+    # Systembook.csv has the transaction details (id, books, checkout, etc.) -> borrowings
+    # SystemCustomers.csv has the customer information -> customers
+    customer_path = os.path.join(data_dir, "03_Library SystemCustomers.csv")       
+    borrowings_path = os.path.join(data_dir, "03_Library Systembook.csv") 
     results_path = os.path.join(output_dir, "results.csv")
     
     # Ensure output directory exists
@@ -24,11 +27,15 @@ def run_pipeline():
         return
 
     # ==========================================
-    # 1. INGESTION
+    # 1. INGESTION & HEADER NORMALIZATION
     # ==========================================
     print("📥 Ingesting source datasets...")
     df_customers = pd.read_csv(customer_path)
     df_borrowings = pd.read_csv(borrowings_path)
+    
+    # Force all headers to lowercase and strip whitespace to prevent KeyErrors
+    df_customers.columns = df_customers.columns.str.strip().str.lower()
+    df_borrowings.columns = df_borrowings.columns.str.strip().str.lower()
     
     # Track initial total records across both files
     total_raw_records = len(df_customers) + len(df_borrowings)
@@ -39,26 +46,32 @@ def run_pipeline():
     print("🧹 Cleaning data issues...")
     
     # --- Clean Customers ---
-    # Issue: Drop duplicate customer profiles
-    df_customers_clean = df_customers.drop_duplicates(subset=['customer_id']).copy()
-    # Issue: Handle missing names
-    df_customers_clean['customer_name'] = df_customers_clean['customer_name'].fillna("Unknown Customer")
+    # Drop duplicate customer profiles based on 'customer id'
+    if 'customer id' in df_customers.columns:
+        df_customers_clean = df_customers.drop_duplicates(subset=['customer id']).copy()
+    else:
+        df_customers_clean = df_customers.drop_duplicates().copy()
+    
+    # Fill missing customer names if the column exists
+    if 'customer name' in df_customers_clean.columns:
+        df_customers_clean['customer name'] = df_customers_clean['customer name'].fillna("Unknown Customer")
     
     # --- Clean Borrowings ---
-    # Issue: Drop rows with completely empty critical fields (like missing book or customer IDs)
-    df_borrowings_clean = df_borrowings.dropna(subset=['borrowing_id', 'customer_id', 'book_id']).copy()
+    # Drop rows where critical transaction keys are entirely missing
+    df_borrowings_clean = df_borrowings.dropna(subset=['id', 'customer id', 'books']).copy()
     
-    # Issue: Deduplicate identical transaction logs
+    # Deduplicate identical transaction logs
     df_borrowings_clean = df_borrowings_clean.drop_duplicates()
     
-    # Issue: Inconsistent date handling
-    for date_col in ['checkout_date', 'return_date']:
+    # Issue: Inconsistent date handling for your actual date columns
+    for date_col in ['book checkout', 'book returned']:
         if date_col in df_borrowings_clean.columns:
             df_borrowings_clean[date_col] = pd.to_datetime(df_borrowings_clean[date_col], errors='coerce')
             
     # Issue: Referential integrity (Drop customer IDs that don't exist in customer file)
-    valid_customer_ids = df_customers_clean['customer_id'].unique()
-    df_borrowings_clean = df_borrowings_clean[df_borrowings_clean['customer_id'].isin(valid_customer_ids)]
+    if 'customer id' in df_customers_clean.columns and 'customer id' in df_borrowings_clean.columns:
+        valid_customer_ids = df_customers_clean['customer id'].unique()
+        df_borrowings_clean = df_borrowings_clean[df_borrowings_clean['customer id'].isin(valid_customer_ids)]
     
     # ==========================================
     # 3. METRICS GATHERING
@@ -70,8 +83,8 @@ def run_pipeline():
     records_dropped = total_raw_records - total_cleaned_records
     
     # Books & Customer specific counts
-    unique_books_count = df_borrowings_clean['book_id'].nunique() if 'book_id' in df_borrowings_clean.columns else 0
-    unique_customers_count = df_customers_clean['customer_id'].nunique()
+    unique_books_count = df_borrowings_clean['books'].nunique() if 'books' in df_borrowings_clean.columns else 0
+    unique_customers_count = df_customers_clean['customer id'].nunique() if 'customer id' in df_customers_clean.columns else 0
     
     # Pipeline execution time
     execution_time_seconds = round(time.time() - start_time, 4)
@@ -79,7 +92,6 @@ def run_pipeline():
     # ==========================================
     # 4. GENERATING THE RESULTS CSV
     # ==========================================
-    # Structuring data cleanly for Power BI cards and charts
     metrics_summary = {
         "Execution_Timestamp": [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
         "Number_of_records_processed": [total_raw_records],
